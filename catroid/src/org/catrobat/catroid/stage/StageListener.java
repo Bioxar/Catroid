@@ -64,6 +64,7 @@ import org.catrobat.catroid.facedetection.FaceDetectionHandler;
 import org.catrobat.catroid.io.SoundManager;
 import org.catrobat.catroid.ui.dialogs.StageDialog;
 import org.catrobat.catroid.utils.FlashUtil;
+import org.catrobat.catroid.utils.ScreenSizeManager;
 import org.catrobat.catroid.utils.Utils;
 import org.catrobat.catroid.utils.VibratorUtil;
 
@@ -142,8 +143,8 @@ public class StageListener implements ApplicationListener {
 
 	public int maximizeViewPortX = 0;
 	public int maximizeViewPortY = 0;
-	public int maximizeViewPortHeight = 0;
-	public int maximizeViewPortWidth = 0;
+/*	public int maximizeViewPortHeight = 0;
+	public int maximizeViewPortWidth = 0;*/
 
 	public boolean axesOn = false;
 
@@ -162,11 +163,20 @@ public class StageListener implements ApplicationListener {
 		project = ProjectManager.getInstance().getCurrentProject();
 		pathForScreenshot = Utils.buildProjectPath(project.getName()) + "/";
 
+/*
 		virtualWidth = project.getXmlHeader().virtualScreenWidth;
 		virtualHeight = project.getXmlHeader().virtualScreenHeight;
 
 		virtualWidthHalf = virtualWidth / 2;
 		virtualHeightHalf = virtualHeight / 2;
+*/
+
+		// TODO SSMANAGER TEST
+		virtualWidth = ScreenSizeManager.getInstance().getRealScreenSize().first;
+		virtualHeight = ScreenSizeManager.getInstance().getRealScreenSize().second;
+
+		virtualWidthHalf = ScreenSizeManager.getInstance().getScreenMiddlePoint().first;
+		virtualHeightHalf = ScreenSizeManager.getInstance().getScreenMiddlePoint().second;
 
 		camera = new OrthographicCamera();
 		viewPort = new ExtendViewport(virtualWidth, virtualHeight, camera);
@@ -182,8 +192,8 @@ public class StageListener implements ApplicationListener {
 			sprite.resume();
 		}
 
-		passepartout = new Passepartout(ScreenValues.SCREEN_WIDTH, ScreenValues.SCREEN_HEIGHT, maximizeViewPortWidth,
-				maximizeViewPortHeight, virtualWidth, virtualHeight);
+		passepartout = new Passepartout(ScreenValues.SCREEN_WIDTH, ScreenValues.SCREEN_HEIGHT, ScreenValues.SCREEN_WIDTH,
+				ScreenValues.SCREEN_HEIGHT, virtualWidth, virtualHeight);
 		stage.addActor(passepartout);
 
 		if (DEBUG) {
@@ -619,8 +629,8 @@ public class StageListener implements ApplicationListener {
 				break;
 
 			case MAXIMIZE:
-				screenshotWidth = maximizeViewPortWidth;
-				screenshotHeight = maximizeViewPortHeight;
+				screenshotWidth = ScreenValues.SCREEN_WIDTH;
+				screenshotHeight = ScreenValues.SCREEN_HEIGHT;
 				screenshotX = maximizeViewPortX;
 				screenshotY = maximizeViewPortY;
 				viewPort = new ExtendViewport(virtualWidth, virtualHeight, camera);

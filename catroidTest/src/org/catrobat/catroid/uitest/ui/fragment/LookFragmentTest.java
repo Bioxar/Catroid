@@ -60,6 +60,7 @@ import org.catrobat.catroid.ui.fragment.LookFragment;
 import org.catrobat.catroid.uitest.annotation.Device;
 import org.catrobat.catroid.uitest.util.BaseActivityInstrumentationTestCase;
 import org.catrobat.catroid.uitest.util.UiTestUtils;
+import org.catrobat.catroid.utils.ScreenSizeManager;
 import org.catrobat.catroid.utils.Utils;
 
 import java.io.File;
@@ -170,7 +171,8 @@ public class LookFragmentTest extends BaseActivityInstrumentationTestCase<MainMe
 		lookData3.setLookFilename(imageFileJpg.getName());
 		lookData3.setLookName(THIRD_TEST_LOOK_NAME);
 
-		Utils.updateScreenWidthAndHeight(solo.getCurrentActivity());
+		// TODO SSMANAGER TEST
+		ScreenSizeManager.getInstance().updateScreenSize();
 		projectManager.getCurrentProject().getXmlHeader().virtualScreenWidth = ScreenValues.SCREEN_WIDTH;
 		projectManager.getCurrentProject().getXmlHeader().virtualScreenHeight = ScreenValues.SCREEN_HEIGHT;
 

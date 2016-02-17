@@ -37,6 +37,7 @@ import org.catrobat.catroid.content.bricks.Brick;
 import org.catrobat.catroid.devices.mindstorms.nxt.sensors.NXTSensor;
 import org.catrobat.catroid.formulaeditor.DataContainer;
 import org.catrobat.catroid.ui.SettingsActivity;
+import org.catrobat.catroid.utils.ScreenSizeManager;
 import org.catrobat.catroid.utils.Utils;
 
 import java.io.File;
@@ -64,13 +65,16 @@ public class Project implements Serializable {
 
 		xmlHeader.setlandscapeMode(landscapeMode);
 
-		if (landscapeMode) {
+/*		if (landscapeMode) {
 			ifPortraitSwitchWidthAndHeight();
 		} else {
 			ifLandscapeSwitchWidthAndHeight();
-		}
+		}*/
+
+		// TODO SSMANAGER TEST
 		if (ScreenValues.SCREEN_HEIGHT == 0 || ScreenValues.SCREEN_WIDTH == 0) {
-			Utils.updateScreenWidthAndHeight(context);
+			ScreenSizeManager.getInstance().setContext(context);
+			ScreenSizeManager.getInstance().updateScreenSize();
 		}
 		xmlHeader.virtualScreenWidth = ScreenValues.SCREEN_WIDTH;
 		xmlHeader.virtualScreenHeight = ScreenValues.SCREEN_HEIGHT;
@@ -93,7 +97,7 @@ public class Project implements Serializable {
 		this(context, name, false);
 	}
 
-	private void ifLandscapeSwitchWidthAndHeight() {
+/*	private void ifLandscapeSwitchWidthAndHeight() {
 		if (ScreenValues.SCREEN_WIDTH > ScreenValues.SCREEN_HEIGHT) {
 			int tmp = ScreenValues.SCREEN_HEIGHT;
 			ScreenValues.SCREEN_HEIGHT = ScreenValues.SCREEN_WIDTH;
@@ -107,7 +111,7 @@ public class Project implements Serializable {
 			ScreenValues.SCREEN_HEIGHT = ScreenValues.SCREEN_WIDTH;
 			ScreenValues.SCREEN_WIDTH = tmp;
 		}
-	}
+	}*/
 
 	public synchronized void addSprite(Sprite sprite) {
 		if (spriteList.contains(sprite)) {

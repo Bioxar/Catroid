@@ -108,7 +108,7 @@ public final class Utils {
 		return true;
 	}
 
-	public static void updateScreenWidthAndHeight(Context context) {
+/*	public static void updateScreenWidthAndHeight(Context context) {
 		if (context != null) {
 			WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 			DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -119,7 +119,7 @@ public final class Utils {
 			//a null-context should never be passed. However, an educated guess is needed in that case.
 			ScreenValues.setToDefaultSreenSize();
 		}
-	}
+	}*/
 
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context

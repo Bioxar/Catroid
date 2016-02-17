@@ -43,6 +43,7 @@ import org.catrobat.catroid.stage.PreStageActivity;
 import org.catrobat.catroid.ui.controller.BackPackListManager;
 import org.catrobat.catroid.ui.dialogs.NewProjectDialog;
 import org.catrobat.catroid.utils.DownloadUtil;
+import org.catrobat.catroid.utils.ScreenSizeManager;
 import org.catrobat.catroid.utils.StatusBarNotificationManager;
 import org.catrobat.catroid.utils.UtilFile;
 import org.catrobat.catroid.utils.UtilZip;
@@ -66,7 +67,10 @@ public class MainMenuActivity extends BaseActivity implements OnLoadProjectCompl
 			return;
 		}
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
-		Utils.updateScreenWidthAndHeight(this);
+
+		// TODO SSMANAGER TEST
+		ScreenSizeManager.getInstance().setContext(this);
+		ScreenSizeManager.getInstance().updateScreenSize();
 
 		setContentView(R.layout.activity_main_menu);
 

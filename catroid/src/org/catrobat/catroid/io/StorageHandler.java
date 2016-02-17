@@ -143,6 +143,7 @@ import org.catrobat.catroid.formulaeditor.DataContainer;
 import org.catrobat.catroid.formulaeditor.UserList;
 import org.catrobat.catroid.formulaeditor.UserVariable;
 import org.catrobat.catroid.utils.ImageEditing;
+import org.catrobat.catroid.utils.ScreenSizeManager;
 import org.catrobat.catroid.utils.UtilFile;
 import org.catrobat.catroid.utils.Utils;
 
@@ -748,8 +749,8 @@ public final class StorageHandler {
 
 		Project project = ProjectManager.getInstance().getCurrentProject();
 
-		if ((imageDimensions[0] > project.getXmlHeader().virtualScreenWidth)
-				&& (imageDimensions[1] > project.getXmlHeader().virtualScreenHeight)) {
+		if ((imageDimensions[0] > ScreenSizeManager.getInstance().getRealScreenSize().first)
+				&& (imageDimensions[1] > ScreenSizeManager.getInstance().getRealScreenSize().second)) {
 			File outputFile = new File(buildPath(imageDirectory.getAbsolutePath(), inputFile.getName()));
 			return copyAndResizeImage(outputFile, inputFile, imageDirectory);
 		} else {
@@ -819,7 +820,8 @@ public final class StorageHandler {
 	private File copyAndResizeImage(File outputFile, File inputFile, File imageDirectory) throws IOException {
 		Project project = ProjectManager.getInstance().getCurrentProject();
 		Bitmap bitmap = ImageEditing.getScaledBitmapFromPath(inputFile.getAbsolutePath(),
-				project.getXmlHeader().virtualScreenWidth, project.getXmlHeader().virtualScreenHeight,
+				ScreenSizeManager.getInstance().getRealScreenSize().first,
+				ScreenSizeManager.getInstance().getRealScreenSize().second,
 				ImageEditing.ResizeType.FILL_RECTANGLE_WITH_SAME_ASPECT_RATIO, true);
 
 		saveBitmapToImageFile(outputFile, bitmap);

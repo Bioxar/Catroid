@@ -48,6 +48,7 @@ import org.catrobat.catroid.ui.dialogs.CustomAlertDialogBuilder;
 import org.catrobat.catroid.ui.dialogs.StageDialog;
 import org.catrobat.catroid.utils.FlashUtil;
 import org.catrobat.catroid.utils.VibratorUtil;
+import org.catrobat.catroid.utils.ScreenSizeManager;
 
 public class StageActivity extends AndroidApplication {
 	public static final String TAG = StageActivity.class.getSimpleName();
@@ -169,49 +170,62 @@ public class StageActivity extends AndroidApplication {
 	}
 
 	private void calculateScreenSizes() {
-		int virtualScreenWidth = ProjectManager.getInstance().getCurrentProject().getXmlHeader().virtualScreenWidth;
-		int virtualScreenHeight = ProjectManager.getInstance().getCurrentProject().getXmlHeader().virtualScreenHeight;
-		if (virtualScreenHeight > virtualScreenWidth) {
-			iflandscapeModeSwitchWidthAndHeight();
-		} else {
-			ifPortraitSwitchWidthAndHeight();
-		}
-		float aspectRatio = (float) virtualScreenWidth / (float) virtualScreenHeight;
-		float screenAspectRatio = ScreenValues.getAspectRatio();
+		//int virtualScreenWidth = ProjectManager.getInstance().getCurrentProject().getXmlHeader().virtualScreenWidth;
+		//int virtualScreenHeight = ProjectManager.getInstance().getCurrentProject().getXmlHeader().virtualScreenHeight;
 
-		if ((virtualScreenWidth == ScreenValues.SCREEN_WIDTH && virtualScreenHeight == ScreenValues.SCREEN_HEIGHT)
-				|| Float.compare(screenAspectRatio, aspectRatio) == 0) {
-			resizePossible = false;
-			stageListener.maximizeViewPortWidth = ScreenValues.SCREEN_WIDTH;
-			stageListener.maximizeViewPortHeight = ScreenValues.SCREEN_HEIGHT;
-			return;
-		}
+		ScreenSizeManager.getInstance().setContext(this);
+		ScreenSizeManager.getInstance().updateScreenSize();
 
-		resizePossible = true;
+		resizePossible = false;
 
-		float scale = 1f;
-		float ratioHeight = (float) ScreenValues.SCREEN_HEIGHT / (float) virtualScreenHeight;
-		float ratioWidth = (float) ScreenValues.SCREEN_WIDTH / (float) virtualScreenWidth;
+		//Log.v("SIZE ", "width: " + ScreenSizeManager.getInstance().getRealScreenSize().first + "   " + "height: " + ScreenSizeManager.getInstance().getRealScreenSize().second);
+		//Log.v("SIZE_SCREENVALUE ", "width: " + ScreenValues.SCREEN_WIDTH + "   " + "height: " + ScreenValues.SCREEN_HEIGHT);
 
-		if (aspectRatio < screenAspectRatio) {
-			scale = ratioHeight / ratioWidth;
-			stageListener.maximizeViewPortWidth = (int) (ScreenValues.SCREEN_WIDTH * scale);
-			stageListener.maximizeViewPortX = (int) ((ScreenValues.SCREEN_WIDTH - stageListener.maximizeViewPortWidth) / 2f);
-			stageListener.maximizeViewPortHeight = ScreenValues.SCREEN_HEIGHT;
-		} else if (aspectRatio > screenAspectRatio) {
-			scale = ratioWidth / ratioHeight;
-			stageListener.maximizeViewPortHeight = (int) (ScreenValues.SCREEN_HEIGHT * scale);
-			stageListener.maximizeViewPortY = (int) ((ScreenValues.SCREEN_HEIGHT - stageListener.maximizeViewPortHeight) / 2f);
-			stageListener.maximizeViewPortWidth = ScreenValues.SCREEN_WIDTH;
-		}
-	}
 
-	private void iflandscapeModeSwitchWidthAndHeight() {
-		if (ScreenValues.SCREEN_WIDTH > ScreenValues.SCREEN_HEIGHT) {
-			int tmp = ScreenValues.SCREEN_HEIGHT;
-			ScreenValues.SCREEN_HEIGHT = ScreenValues.SCREEN_WIDTH;
-			ScreenValues.SCREEN_WIDTH = tmp;
-		}
+//		resizePossible = false;
+//			stageListener.maximizeViewPortWidth = ScreenValues.SCREEN_WIDTH;
+//			stageListener.maximizeViewPortHeight = ScreenValues.SCREEN_HEIGHT;
+//		if (virtualScreenHeight > virtualScreenWidth) {
+//			iflandscapeModeSwitchWidthAndHeight();
+//		} else {
+//			ifPortraitSwitchWidthAndHeight();
+//		}
+//		float aspectRatio = (float) virtualScreenWidth /  (float) virtualScreenHeight;
+//		float screenAspectRatio = ScreenValues.getAspectRatio();
+//
+//		if ((virtualScreenWidth == ScreenValues.SCREEN_WIDTH && virtualScreenHeight == ScreenValues.SCREEN_HEIGHT)
+//				|| Float.compare(screenAspectRatio, aspectRatio) == 0) {
+//			resizePossible = false;
+//			stageListener.maximizeViewPortWidth = ScreenValues.SCREEN_WIDTH;
+//			stageListener.maximizeViewPortHeight = ScreenValues.SCREEN_HEIGHT;
+//			return;
+//		}
+//
+//		resizePossible = true;
+//
+//		float scale = 1f;
+//		float ratioHeight = (float) ScreenValues.SCREEN_HEIGHT / (float) virtualScreenHeight;
+//		float ratioWidth = (float) ScreenValues.SCREEN_WIDTH / (float) virtualScreenWidth;
+//
+//		if (aspectRatio < screenAspectRatio) {
+//			scale = ratioHeight / ratioWidth;
+//			stageListener.maximizeViewPortWidth = (int) (ScreenValues.SCREEN_WIDTH * scale);
+//			stageListener.maximizeViewPortX = (int) ((ScreenValues.SCREEN_WIDTH - stageListener.maximizeViewPortWidth) / 2f);
+//			stageListener.maximizeViewPortHeight = ScreenValues.SCREEN_HEIGHT;
+//		} else if (aspectRatio > screenAspectRatio) {
+//			scale = ratioWidth / ratioHeight;
+//			stageListener.maximizeViewPortHeight = (int) (ScreenValues.SCREEN_HEIGHT * scale);
+//			stageListener.maximizeViewPortY = (int) ((ScreenValues.SCREEN_HEIGHT - stageListener.maximizeViewPortHeight) / 2f);
+//			stageListener.maximizeViewPortWidth = ScreenValues.SCREEN_WIDTH;
+//		}
+//	}
+//
+//	private void iflandscapeModeSwitchWidthAndHeight() {
+//		if (ScreenValues.SCREEN_WIDTH > ScreenValues.SCREEN_HEIGHT) {
+//			int tmp = ScreenValues.SCREEN_HEIGHT;
+//			ScreenValues.SCREEN_HEIGHT = ScreenValues.SCREEN_WIDTH;
+//			ScreenValues.SCREEN_WIDTH = tmp;
+//		}
 	}
 
 	private void ifPortraitSwitchWidthAndHeight() {
